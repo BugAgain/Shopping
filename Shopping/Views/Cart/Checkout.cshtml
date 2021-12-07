@@ -1,0 +1,12 @@
+﻿@model Shopping.Models.Cart
+
+@{
+    ViewData["Title"] = "Your cart";
+}
+
+<h1>Your cart</h1>
+
+@foreach (var item in Model.Items)
+{
+    <p>@item.Name - @item.Quantity - @((item.Quantity == 0 ? item.Price : item.GetTotalProducts()).ToString("c"))</p>
+}

@@ -1,0 +1,64 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+@model IEnumerable<Shopping.Models.Product>
+
+@{
+    ViewData["Title"] = "All Products";
+}
+
+<h1>All Products</h1>
+
+<div class="row">
+    <div class="card-deck">
+        @foreach (var item in Model)
+        {
+            <div class="card">
+                <img class="card-img-top" src="~/images/@item.ImagePath" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Name</h5>
+                    <p class="card-text">@item.Description</p>
+                    <a href="javascript:void(0);"
+                       id="btnAdd@(item.ProductId)"
+                       onClick="AddProduct(@item.ProductId);return false;"
+                       class="btn btn-primary">Add to cart</a>
+                </div>
+                <div class="card-footer text-right">
+                    <small class="text-muted font-weight-bold">@item.Price.ToString("c")</small>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+
+    <script type="text/javascript">
+        function AddProduct(productId) {
+            $.ajax({
+                type: "POST",
+                url: "/Cart/AddProduct",
+                data: {
+                    productId: productId,
+                    userId: '@UserManager.GetUserId(User)'
+                },
+                success: function (response) {
+                    $('#btnAdd' + productId)
+                        .prop('disabled', true)
+                        .addClass('disabled')
+                        .text('Added!');
+                },
+                failure: function (response) {
+                    console.log('failure');
+                    console.log(response);
+                },
+                error: function (response) {
+                    console.log('error');
+                    console.log(response);
+                }
+            });
+        }
+
+
+    </script>
+
+}
