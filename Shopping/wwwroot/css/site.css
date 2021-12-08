@@ -662,6 +662,9 @@ section {
 .dropdown_selection li a:hover {
     color: #b5aec4;
 }
+.menu_margin {
+    margin-top: 150px;
+}
 
 /*********************************
 3.5 Hamburger Menu
@@ -933,7 +936,6 @@ section {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
-    margin-top: 150px;
 }
 
 /*********************************

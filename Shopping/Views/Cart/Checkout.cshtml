@@ -4,8 +4,20 @@
     ViewData["Title"] = "Your cart";
 }
 
-<div class="container" style="margin-top: 150px;">
-    <h1>Session cart</h1>
+<div class="container menu_margin">
+
+    <!-- Breadcrumbs -->
+
+    <div class="col">
+        <div class="breadcrumbs d-flex flex-row align-items-center">
+            <ul>
+                <li><a href="/">Cart</a></li>
+                <li class="active"><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i>Checkout</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <h1>Your cart</h1>
 
     @foreach (var item in Model)
     {
