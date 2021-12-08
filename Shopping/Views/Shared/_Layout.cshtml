@@ -7,60 +7,158 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="~/images/thecustomfactory_icon.png" type="image/png">
     <title>@ViewData["Title"] - Shopping</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <!-- Header -->
+
+    <header class="header trans_300">
+
+        <!-- Top Navigation -->
+
+        <div class="top_nav">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Shopping</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="GetProducts">All Products</a>
-                        </li>
-                        @if (SignInManager.IsSignedIn(User))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="Index">Orders</a>
-                            </li>
-                        }
-                    </ul>
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Checkout">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
-                                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                                </svg>
-                            </a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="top_nav_left">FREE Shipping above AED250 in UAE | Worldwide Shipping</div>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <div class="top_nav_right">
+                            <ul class="top_nav_menu">
+
+                                <!-- Currency / Language / My Account -->
+
+                                <li class="language">
+                                    <a href="#">
+                                        English
+                                        <i class="fa fa-angle-down"></i>
+                                    </a>
+                                    <ul class="language_selection">
+                                        <li><a href="#">أداة ترجمة اللغة</a></li>
+                                    </ul>
+                                </li>
+                                <li class="currency">
+                                    <a href="#">
+                                        ead
+                                        <i class="fa fa-angle-down"></i>
+                                    </a>
+                                    <ul class="currency_selection">
+                                        <li><a href="#">usd</a></li>
+                                        <li><a href="#">eur</a></li>
+                                        <li><a href="#">inr</a></li>
+                                        <li><a href="#">sar</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </nav>
+        </div>
+
+        <!-- Main Navigation -->
+
+        <div class="main_nav_container">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-right">
+                        <div class="logo_container">
+                            <a href="#">
+                                <img class="logo_image" src="~/images/thecustomfactory.png" alt="The Custom Factory" />
+                            </a>
+                        </div>
+                        <nav class="navbar">
+                            <ul class="navbar_menu">
+                                <li class="dropdown">
+                                    <a href="#">
+                                        Passport Covers
+                                        <i class="fa fa-angle-down"></i>
+                                    </a>
+                                    <ul class="dropdown_selection">
+                                        <li><a href="#">Doodle Cover</a></li>
+                                        <li><a href="#">Doodle Passport Cover</a></li>
+                                        <li><a href="#">Exclusive Edition Passport Covers</a></li>
+                                        <li><a href="#">Bestsellers Ready Passport Designs</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#">Travel<i class="fa fa-angle-down"></i></a>
+                                    <ul class="dropdown_selection">
+                                        <li><a href="#">Travel Wallet</a></li>
+                                        <li><a href="#">Luggage Tagst</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#">
+                                        Tech
+                                        <i class="fa fa-angle-down"></i>
+                                    </a>
+                                    <ul class="dropdown_selection">
+                                        <li><a href="#">Apple Watch Bands</a></li>
+                                        <li><a href="#">Laptop Bags</a></li>
+                                        <li><a href="#">Work Folio</a></li>
+                                        <li><a href="#">Laptop Sleeve</a></li>
+                                        <li><a href="#">iPad Sleeve</a></li>
+                                        <li><a href="#">Mouse Pad</a></li>
+                                        <li><a href="#">Cable Holder</a></li>
+                                        <li class="dropdown">
+                                            <a href="#">
+                                                Airpod Cases
+                                                <i class="fa fa-angle-right"></i>
+                                            </a>
+                                            <ul class="dropdown_selection">
+                                                <li><a href="#">Mouse Pad</a></li>
+                                                <li><a href="#">Cable Holder</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">Lifestyle</a></li>
+                                <li><a href="#">Stationery</a></li>
+                                <li><a href="#">Gift Hampers</a></li>
+                                <li><a href="#">Mens Wallet</a></li>
+                            </ul>
+                            <ul class="navbar_user">
+                                <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                                <li class="checkout">
+                                    <a href="#">
+                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                        <span id="checkout_items" class="checkout_items">2</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="hamburger_container">
+                                <i class="fa fa-bars" aria-hidden="true"></i>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+
+    @* TODO: hamburger menu here*@
+    @*<div class="fs_menu_overlay"></div>*@
+
+    @RenderBody()
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - Shopping - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <div class="container text-center d-flex justify-content-center">
+            <div class="col-md-4">
+                Copyright © 2020 - @(DateTime.UtcNow.Year) The Custom Factory. All rights reserved.
+            </div>
+            <div class="col-md-4">
+                Made with <i class="fa fa-heart" style="font-size:12px;color:#970909"></i> in Dubai
+            </div>
+            <div class="col-md-4 text-right">
+                Powered by <a href="http://websters.ae/">Websters</a>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
