@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<Shopping.Models.Product>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -82,8 +84,8 @@
                 <a href="#">
                     <div class="banner_item align-items-center" style="background-image:url(images/banner01.jpg)">
                         @*<div class="banner_category">
-                            <a href="categories.html">women's</a>
-                        </div>*@
+                                <a href="categories.html">women's</a>
+                            </div>*@
                     </div>
                 </a>
             </div>
@@ -91,8 +93,8 @@
                 <a href="#">
                     <div class="banner_item align-items-center" style="background-image:url(images/banner02.png)">
                         @*<div class="banner_category">
-                            <a href="categories.html">accessories's</a>
-                        </div>*@
+                                <a href="categories.html">accessories's</a>
+                            </div>*@
                     </div>
                 </a>
             </div>
@@ -100,11 +102,68 @@
                 <a href="#">
                     <div class="banner_item align-items-center" style="background-image:url(images/banner03.png)">
                         @*<div class="banner_category">
-                            <a href="categories.html">men's</a>
-                        </div>*@
+                                <a href="categories.html">men's</a>
+                            </div>*@
                     </div>
                 </a>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Best Sellers -->
+
+
+<div class="best-sellers container text-center mt-5">
+    <div class="title-bar custom-font">
+        <h2 class="h2">Best Sellers</h2>
+        <div class="brdr"></div>
+    </div>
+    <div class="card-deck mt-5">
+        @foreach (var item in Model)
+        {
+            <div class="card">
+                <img class="card-img-top" src="~/images/@item.ImagePath" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Name</h5>
+                    <p class="card-text">@item.Description</p>
+
+                    <a class="btn btn-primary mb-2"
+                       asp-controller="Products"
+                       asp-action="Details"
+                       asp-route-id="@item.ProductId">
+                        Product Detail
+                    </a>
+
+                    <a href="javascript:void(0);"
+                       id="btnAddSession@(item.ProductId)"
+                       onClick="AddToCart(@item.ProductId);return false;"
+                       class="btn btn-primary">Add to Cart</a>
+                </div>
+                <div class="card-footer text-right">
+                    <small class="text-muted font-weight-bold">@item.Price.ToString("c")</small>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        function AddToCart(productId) {
+            $.ajax({
+                type: "POST",
+                url: "/Cart/AddToCart",
+                data: {
+                    productId: productId
+                },
+                success: function (response) {
+                    $('#btnAddSession' + productId)
+                        .prop('disabled', true)
+                        .addClass('disabled')
+                        .text('Added!');
+                }
+            });
+        }
+    </script>
+}

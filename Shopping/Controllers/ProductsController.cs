@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Shopping.Data;
 using Shopping.Models;
@@ -145,16 +142,6 @@ namespace Shopping.Controllers
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        // GET: GetProducts
-        [AllowAnonymous]
-        public async Task<IActionResult> GetProducts()
-        {
-            var products = await _context.Products
-                .AsNoTracking().ToListAsync();
-
-            return View(products);
         }
 
         private bool ProductExists(int id)

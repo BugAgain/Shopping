@@ -67,7 +67,7 @@
                 <div class="row">
                     <div class="col-lg-12 text-right">
                         <div class="logo_container">
-                            <a href="#">
+                            <a href="/">
                                 <img class="logo_image" src="~/images/thecustomfactory.png" alt="The Custom Factory" />
                             </a>
                         </div>
@@ -124,9 +124,13 @@
                             </ul>
                             <ul class="navbar_user">
                                 <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                                <li>
+                                    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                    </a>
+                                </li>
                                 <li class="checkout">
-                                    <a href="#">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Checkout">
                                         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                         <span id="checkout_items" class="checkout_items">2</span>
                                     </a>
@@ -148,7 +152,7 @@
 
     @RenderBody()
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer fixed-bottom text-muted">
         <div class="container text-center d-flex justify-content-center">
             <div class="col-md-4">
                 Copyright © 2020 - @(DateTime.UtcNow.Year) The Custom Factory. All rights reserved.

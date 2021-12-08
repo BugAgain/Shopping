@@ -63,7 +63,6 @@ html {
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
-    overflow: scroll;
 }
 
 .footer {
@@ -609,7 +608,6 @@ section {
     display: inline-block;
     position: relative;
     min-width: 50px;
-    /*text-align: center;*/
     vertical-align: middle;
 }
 .dropdown > a {
@@ -631,7 +629,6 @@ section {
 .dropdown_selection {
     display: block;
     position: absolute;
-    /*right: 0;*/
     top: 120%;
     margin: 0;
     width: fit-content;
@@ -646,18 +643,14 @@ section {
     -o-transition: opacity 0.3s ease;
     transition: all 0.3s ease;
     text-align: left !important;
+    padding: 10px;
 }
 .dropdown_selection li {
-    /*padding-left: 10px;
-    padding-right: 10px;
-    line-height: 50px;*/
     white-space: nowrap;
-    /*border: 1px solid red;*/
 }
 .dropdown_selection li a {
     display: block;
     color: #232530;
-    /*border-bottom: solid 1px #dddddd;*/
     font-size: 13px;
     text-transform: uppercase;
     -webkit-transition: opacity 0.3s ease;
@@ -669,9 +662,6 @@ section {
 .dropdown_selection li a:hover {
     color: #b5aec4;
 }
-/*.dropdown_selection li:last-child a {
-    border-bottom: none;
-}*/
 
 /*********************************
 3.5 Hamburger Menu
@@ -1054,3 +1044,32 @@ section {
 	color: #b5aec4;
 }
 
+/*********************************
+4. Best Sellers
+*********************************/
+
+.title-bar {
+    position: relative;
+    padding: 10px 0 20px 0;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+}
+.title-bar .h2 {
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 20px;
+    letter-spacing: 1px;
+    padding: 0 10px 1px 10px;
+    display: inline-block;
+    position: absolute;
+    transform: translate(-50%, -47%);
+    background: #fff;
+    z-index: 1;
+}
+.brdr {
+    border-top: 1px solid #ccc;
+}
