@@ -17,10 +17,11 @@
                 <div class="card-body">
                     <h5 class="card-title">@item.Name</h5>
                     <p class="card-text">@item.Description</p>
+
                     <a href="javascript:void(0);"
-                       id="btnAdd@(item.ProductId)"
-                       onClick="AddProduct(@item.ProductId);return false;"
-                       class="btn btn-primary">Add to cart</a>
+                       id="btnAddSession@(item.ProductId)"
+                       onClick="AddToCart(@item.ProductId);return false;"
+                       class="btn btn-primary">Add to Session</a>
                 </div>
                 <div class="card-footer text-right">
                     <small class="text-muted font-weight-bold">@item.Price.ToString("c")</small>
@@ -33,27 +34,18 @@
 @section Scripts {
 
     <script type="text/javascript">
-        function AddProduct(productId) {
+        function AddToCart(productId) {
             $.ajax({
                 type: "POST",
-                url: "/Cart/AddProduct",
+                url: "/Cart/AddToCart",
                 data: {
-                    productId: productId,
-                    userId: '@UserManager.GetUserId(User)'
+                    productId: productId
                 },
                 success: function (response) {
-                    $('#btnAdd' + productId)
+                    $('#btnAddSession' + productId)
                         .prop('disabled', true)
                         .addClass('disabled')
                         .text('Added!');
-                },
-                failure: function (response) {
-                    console.log('failure');
-                    console.log(response);
-                },
-                error: function (response) {
-                    console.log('error');
-                    console.log(response);
                 }
             });
         }

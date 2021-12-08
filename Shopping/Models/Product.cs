@@ -25,14 +25,12 @@ namespace Shopping.Models
         [NotMapped]
         public int Quantity { get; set; }
 
-        //public int? CartId { get; set; }
-        public virtual ICollection<Cart> Cart { get; set; }
-
 
         public virtual ICollection<CustomDetail> CustomDetails { get; set; }
 
         public decimal GetTotalProducts()
         {
+            //TODO: Zero value check
             return Quantity * Price;
         }
     }

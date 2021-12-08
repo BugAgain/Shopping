@@ -1,12 +1,12 @@
-﻿@model Shopping.Models.Cart
+﻿@model IEnumerable<Shopping.Models.Product>
 
 @{
-    ViewData["Title"] = "Your cart";
+    ViewData["Title"] = "Session cart";
 }
 
-<h1>Your cart</h1>
+<h1>Session cart</h1>
 
-@foreach (var item in Model.Items)
+@foreach (var item in Model)
 {
     <p>@item.Name - @item.Quantity - @((item.Quantity == 0 ? item.Price : item.GetTotalProducts()).ToString("c"))</p>
 }

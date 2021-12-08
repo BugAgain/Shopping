@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Shopping.Data;
 using Shopping.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Shopping.Controllers
@@ -18,77 +15,75 @@ namespace Shopping.Controllers
             _context = context;
         }
 
-        // GET: Checkout
-        public async Task<IActionResult> Checkout(int cartId)
+        public IActionResult Checkout()
         {
-            var cart = await _context.Cart
-                .Include(c => c.Items)
-                .AsNoTracking()
-                .Where(c => c.CartId == cartId)
-                .FirstOrDefaultAsync();
+            var cart = Extensions.SessionExtensions
+                .GetObjectFromJson<List<Product>>(HttpContext.Session, "cart");
 
-            if (cart == null)
-            {
-                return NotFound();
-            }
-
-            return View(cart);
+            return View(cart ?? new List<Product>());
         }
 
         [HttpPost]
-        public async Task<JsonResult> AddProduct(int productId, string userId)
+        public async Task<JsonResult> AddToCart(int productId)
         {
-            var cart = await _context.Cart
-                .Include(p => p.Items)
-                .Where(c => c.UserId == userId)
-                .FirstOrDefaultAsync();
+            var prod = await _context.Products.FindAsync(productId);
 
-            var prod = await _context.Products
-                    .Include(c => c.Cart)
-                    .Where(p => p.ProductId == productId)
-                    .FirstOrDefaultAsync();
+            var cart = Extensions.SessionExtensions
+                .GetObjectFromJson<List<Product>>(HttpContext.Session, "cart");
 
             if (cart == null)
             {
-                var newCart = new Cart() { UserId = userId };
-
-                prod.Cart.Add(newCart);
-
-                newCart.AddProduct(prod);
-
-                cart = newCart;
+                cart = new List<Product>() { prod };
+                Extensions.SessionExtensions.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
             else
             {
-                var prodExists = cart.Items
-                    .Any(p => p.ProductId == productId);
-
-                if (!prodExists)
+                int index = ProductExists(productId);
+                if (index != -1)
                 {
-                    cart.AddProduct(prod);
+                    cart[index].Quantity++;
                 }
-
-                return Json("Nothing changed!");
+                else
+                {
+                    cart.Add(prod);
+                }
+                Extensions.SessionExtensions.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
 
-
-            if (cart.CartId < 1)
-            {
-                await _context.Cart.AddAsync(cart);
-            }
-            else
-            {
-                _context.Cart.Update(cart);
-            }
-
-            await _context.SaveChangesAsync();
-
-            return Json($"Saved! - {productId}");
+            return Json(default);
         }
 
-        private bool ProductExists(int id)
+        [HttpDelete]
+        public JsonResult Remove(int productId)
         {
-            return _context.Products.Any(e => e.ProductId == id);
+            var cart = Extensions.SessionExtensions
+                .GetObjectFromJson<List<Product>>(HttpContext.Session, "cart");
+
+            int index = ProductExists(productId);
+            if (index != -1)
+            {
+                cart.RemoveAt(index);
+            }
+
+            Extensions.SessionExtensions.SetObjectAsJson(HttpContext.Session, "cart", cart);
+
+            return Json(default);
         }
+
+        private int ProductExists(int productId)
+        {
+            var cart = Extensions.SessionExtensions
+                .GetObjectFromJson<List<Product>>(HttpContext.Session, "cart");
+
+            for (int i = 0; i < cart.Count; i++)
+            {
+                if (cart[i].ProductId == productId)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
     }
 }

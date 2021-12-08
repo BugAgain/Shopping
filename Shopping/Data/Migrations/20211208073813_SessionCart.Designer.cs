@@ -3,36 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shopping.Data;
 
-namespace Shopping.Migrations
+namespace Shopping.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211208073813_SessionCart")]
+    partial class SessionCart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("CartProduct", b =>
-                {
-                    b.Property<int>("CartId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ItemsProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CartId", "ItemsProductId");
-
-                    b.HasIndex("ItemsProductId");
-
-                    b.ToTable("CartProduct");
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -234,21 +221,6 @@ namespace Shopping.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Shopping.Models.Cart", b =>
-                {
-                    b.Property<int>("CartId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CartId");
-
-                    b.ToTable("Cart");
-                });
-
             modelBuilder.Entity("Shopping.Models.CustomDetail", b =>
                 {
                     b.Property<int>("CustomDetailId")
@@ -283,6 +255,9 @@ namespace Shopping.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeliveredBy")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("OrderStatus")
@@ -322,21 +297,6 @@ namespace Shopping.Migrations
                     b.HasKey("ProductId");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("CartProduct", b =>
-                {
-                    b.HasOne("Shopping.Models.Cart", null)
-                        .WithMany()
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Shopping.Models.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ItemsProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
