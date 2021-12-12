@@ -38,6 +38,8 @@ namespace Shopping
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
 
+            services.AddMemoryCache();
+
             services.AddSession();
         }
 

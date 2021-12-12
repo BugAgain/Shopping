@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using SessionEx = Shopping.Extensions.SessionExtensions;
+using Shopping.Filters;
 
 namespace Shopping.Controllers
 {
@@ -21,6 +22,8 @@ namespace Shopping.Controllers
             _context = context;
         }
 
+        [Throttle(Name = "ThrottleDemo",
+            Message = "You must wait {n} seconds before accessing this url again.", Seconds = 15)]
         public IActionResult Checkout()
         {
             var cart = SessionEx.GetObjectFromJson<List<Product>>(
