@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Http
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+@inject IHttpContextAccessor HttpContextAccessor
 
 <!DOCTYPE html>
 <html lang="en">
@@ -132,7 +134,7 @@
                                 <li class="checkout">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Checkout">
                                         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                        <span id="checkout_items" class="checkout_items">2</span>
+                                        <span id="checkout_items" class="checkout_items">@(HttpContextAccessor.HttpContext.Session.GetInt32("_cart_items_count") ?? 0)</span>
                                     </a>
                                 </li>
                             </ul>

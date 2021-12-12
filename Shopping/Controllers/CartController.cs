@@ -1,13 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Shopping.Data;
 using Shopping.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using SessionEx = Shopping.Extensions.SessionExtensions;
+
 namespace Shopping.Controllers
 {
     public class CartController : Controller
     {
+        private const string SessionKeyCart = "_cart";
+        private const string SessionKeyCartItemsCount = "_cart_items_count";
+
         private readonly ApplicationDbContext _context;
 
         public CartController(ApplicationDbContext context)
@@ -17,8 +23,8 @@ namespace Shopping.Controllers
 
         public IActionResult Checkout()
         {
-            var cart = Extensions.SessionExtensions
-                .GetObjectFromJson<List<Product>>(HttpContext.Session, "cart");
+            var cart = SessionEx.GetObjectFromJson<List<Product>>(
+                HttpContext.Session, SessionKeyCart);
 
             return View(cart ?? new List<Product>());
         }
@@ -28,13 +34,14 @@ namespace Shopping.Controllers
         {
             var prod = await _context.Products.FindAsync(productId);
 
-            var cart = Extensions.SessionExtensions
-                .GetObjectFromJson<List<Product>>(HttpContext.Session, "cart");
+            var cart = SessionEx.GetObjectFromJson<List<Product>>(
+                HttpContext.Session, SessionKeyCart);
 
             if (cart == null)
             {
+                prod.Quantity = 1;
                 cart = new List<Product>() { prod };
-                Extensions.SessionExtensions.SetObjectAsJson(HttpContext.Session, "cart", cart);
+                SessionEx.SetObjectAsJson(HttpContext.Session, SessionKeyCart, cart);
             }
             else
             {
@@ -45,19 +52,22 @@ namespace Shopping.Controllers
                 }
                 else
                 {
+                    prod.Quantity = 1;
                     cart.Add(prod);
                 }
-                Extensions.SessionExtensions.SetObjectAsJson(HttpContext.Session, "cart", cart);
+                SessionEx.SetObjectAsJson(HttpContext.Session, SessionKeyCart, cart);
             }
 
-            return Json(default);
+            HttpContext.Session.SetInt32(SessionKeyCartItemsCount, cart.Count);
+
+            return Json(cart.Count);
         }
 
         [HttpDelete]
         public JsonResult Remove(int productId)
         {
-            var cart = Extensions.SessionExtensions
-                .GetObjectFromJson<List<Product>>(HttpContext.Session, "cart");
+            var cart = SessionEx.GetObjectFromJson<List<Product>>(
+                HttpContext.Session, SessionKeyCart);
 
             int index = ProductExists(productId);
             if (index != -1)
@@ -65,15 +75,15 @@ namespace Shopping.Controllers
                 cart.RemoveAt(index);
             }
 
-            Extensions.SessionExtensions.SetObjectAsJson(HttpContext.Session, "cart", cart);
+            SessionEx.SetObjectAsJson(HttpContext.Session, SessionKeyCart, cart);
 
-            return Json(default);
+            return Json(cart.Count);
         }
 
         private int ProductExists(int productId)
         {
-            var cart = Extensions.SessionExtensions
-                .GetObjectFromJson<List<Product>>(HttpContext.Session, "cart");
+            var cart = SessionEx.GetObjectFromJson<List<Product>>(
+                HttpContext.Session, SessionKeyCart);
 
             for (int i = 0; i < cart.Count; i++)
             {
