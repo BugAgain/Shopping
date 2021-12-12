@@ -53,7 +53,7 @@ namespace Shopping.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Color,Price")] Product product)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,ImagePath,Color,Price")] Product product)
         {
             if (ModelState.IsValid)
             {
