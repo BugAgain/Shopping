@@ -4,9 +4,9 @@ using Shopping.Data;
 using Shopping.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Shopping.Filters;
 
 using SessionEx = Shopping.Extensions.SessionExtensions;
-using Shopping.Filters;
 
 namespace Shopping.Controllers
 {
