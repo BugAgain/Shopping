@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shopping.Data;
+using Shopping.Domain.IRepository;
 using Shopping.Models;
 
 namespace Shopping.Controllers
@@ -11,9 +12,9 @@ namespace Shopping.Controllers
     [Authorize]
     public class ProductsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IProductRepository _context;
 
-        public ProductsController(ApplicationDbContext context)
+        public ProductsController(IProductRepository context)
         {
             _context = context;
         }
@@ -21,7 +22,7 @@ namespace Shopping.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Products.AsNoTracking().ToListAsync());
+            return View(await _context.GetAllAsync());
         }
 
         // GET: Products/Details/5
@@ -85,7 +86,8 @@ namespace Shopping.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int ProductId, [Bind("ProductId,Name,Description,ImagePath,Color,Price")] Product product)
+        public async Task<IActionResult> Edit(int ProductId,
+            [Bind("ProductId,Name,Description,ImagePath,Color,Price")] Product product)
         {
             if (ProductId != product.ProductId)
             {

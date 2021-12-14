@@ -19,4 +19,9 @@
     <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="96.0.4664.4500" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Shopping.Domain\Shopping.Domain.csproj" />
+    <ProjectReference Include="..\Shopping.Infra\Shopping.Infra.csproj" />
+  </ItemGroup>
+
 </Project>

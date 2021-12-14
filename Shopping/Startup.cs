@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shopping.Data;
+using Shopping.Domain.IRepository;
+using Shopping.Infra.Repository;
 
 namespace Shopping
 {
@@ -35,6 +37,8 @@ namespace Shopping
             services.AddMemoryCache();
 
             services.AddSession();
+
+            services.AddTransient<IProductRepository, ProductRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

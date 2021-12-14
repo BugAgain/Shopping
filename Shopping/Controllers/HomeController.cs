@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Shopping.Data;
+using Shopping.Domain.IRepository;
 using Shopping.Models;
+using Shopping.ViewModels;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -11,10 +11,10 @@ namespace Shopping.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ApplicationDbContext _context;
+        private readonly IProductRepository _context;
 
         public HomeController(ILogger<HomeController> logger,
-            ApplicationDbContext context)
+            IProductRepository context)
         {
             _logger = logger;
             _context = context;
@@ -22,7 +22,11 @@ namespace Shopping.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Products.AsNoTracking().ToListAsync());
+            var model = new HomeViewModel();
+
+            model.BestSellers = await _context.GetBestSellersAsync();
+
+            return View(model);
         }
 
         public IActionResult Privacy()

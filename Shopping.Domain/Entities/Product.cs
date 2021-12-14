@@ -29,8 +29,7 @@ namespace Shopping.Domain.Entities
 
         public decimal GetTotalProducts()
         {
-            //TODO: Zero value check
-            return Quantity * Price;
+            return Quantity > 0 ? Quantity * Price : decimal.Zero;
         }
     }
 }

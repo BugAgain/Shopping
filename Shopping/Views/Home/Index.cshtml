@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Shopping.Models.Product>
+﻿@model HomeViewModel
 
 @{
     ViewData["Title"] = "Home Page";
@@ -119,7 +119,7 @@
         <div class="brdr"></div>
     </div>
     <div class="card-deck mt-5">
-        @foreach (var item in Model)
+        @foreach (var item in Model.BestSellers)
         {
             <div class="card">
                 <img class="card-img-top" src="~/images/@item.ImagePath" alt="Card image cap">
